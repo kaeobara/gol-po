@@ -3,13 +3,14 @@ a {
 }
 
 .main {
-  background: #f8f8f8;
+  background: #ffffff;
 }
 
 /* 画面上部の「人生を変えるフリマアプリ」帯部分 */
 .title-contents {
   width: 100vw;
-  background-image: image-url('furima-header01.png');
+  height: 350px;
+  background-image: image-url('gol-po-header.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top center;
@@ -64,7 +65,7 @@ a {
   content: '';
   width: 70px;
   height: 4px;
-  background-color: #3ccace;
+  background-color: #785f33;
   position: absolute;
   bottom: -10px;
   left: 50%;
@@ -88,7 +89,10 @@ a {
 .list-pict {
   margin-bottom: 20px;
   width: 100%;
+  display: inline-block;
+  height: 200px;
 }
+
 
 .reason-list-number {
   position: absolute;
@@ -99,7 +103,7 @@ a {
   font-size: 30px;
   text-align: center;
   line-height: 60px;
-  background-color: #3ccace;
+  background-color: #785f33;
   color: #fff;
 }
 
@@ -110,7 +114,7 @@ a {
 }
 
 .reason-list-blue-text {
-  color: #3ccace;
+  color: #785f33;
 }
 
 .reason-list-description {
@@ -216,7 +220,7 @@ a {
 /* 商品一覧 */
 
 .item-contents {
-  background-color: #FFF;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
