@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_16_060943) do
+ActiveRecord::Schema.define(version: 2020_09_19_055559) do
 
   create_table "golves", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title", null: false
     t.text "introduction", null: false
     t.date "date_id", null: false
-    t.integer "time_id", null: false
+    t.integer "meeting_time_id"
     t.integer "prefecture_id", null: false
     t.string "course_name"
     t.integer "drive_id", null: false
@@ -26,6 +26,15 @@ ActiveRecord::Schema.define(version: 2020_09_16_060943) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "score"
     t.index ["user_id"], name: "index_golves_on_user_id"
+  end
+
+  create_table "recruits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "golf_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["golf_id"], name: "index_recruits_on_golf_id"
+    t.index ["user_id"], name: "index_recruits_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -47,4 +56,6 @@ ActiveRecord::Schema.define(version: 2020_09_16_060943) do
   end
 
   add_foreign_key "golves", "users"
+  add_foreign_key "recruits", "golves"
+  add_foreign_key "recruits", "users"
 end
