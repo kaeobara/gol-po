@@ -15,9 +15,13 @@ class GolvesController < ApplicationController
     else
       render :new
     end
+    @comment = Comment.new
+    @commentALL = @golf.comments
   end
 
   def show
+    @comment = Comment.new
+    @comments = @golf.comments.includes(:user)
   end
 
   def edit
@@ -33,19 +37,19 @@ class GolvesController < ApplicationController
 
   def destroy
     if @golf.destroy
-      render_to root_path
+      redirect_to root_path
     end
   end
 
 
   private
   def golf_params
-    params.require(:golf).permit(:play_date, :price, :score, :drive_id, :course_name, :prefecture_id, :meeting_time_id, :image, :title, :introduction).merge(user_id: current_user.id)
+    params.require(:golf).permit(:play_date, :price, :score, :drive_id, :course_name, :prefecture_id, :meeting_time_id, :title, :introduction, :image).merge(user_id: current_user.id)
   end
 
   def ensure_current_user
     golf = Golf.find(params[:id])
-    if golf.user.id != current_user.id
+    if golf.user_id != current_user.id
       redirect_to action: :index
     end
   end
@@ -53,6 +57,8 @@ class GolvesController < ApplicationController
   def find_golf_params
     @golf = Golf.find(params[:id])
   end
+
+  
 
 
 

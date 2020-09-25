@@ -80,7 +80,9 @@
 
 .detail-table {
   margin-bottom: 30px;
-  width: 100%;
+  width: 60%;
+  margin: 0 auto;
+  
 }
 
 .detail-item {

@@ -21,7 +21,7 @@
         <p>
           クリックしてファイルをアップロード
         </p>
-        <%= f.file_field :hoge, id:"item-image" %>
+        <%= f.file_field :image, id:"item-image" %>
       </div>
     </div>
     <%# /出品画像 %>
@@ -51,7 +51,8 @@
           <span class="indispensable">必須</span>
         </div>
         <%# <input name="date" type="date /"> %>
-        <%= f.date_select :play_date, {}, class:"select-box", id:"golf-date" %>
+        <%= f.date_field :play_date, class:"select-box", id:"golf-play-date" %>
+        
         <div class="weight-bold-text">
           時間
           <span class="indispensable">必須</span>
@@ -96,28 +97,13 @@
     </div>
     <%# /配送について %>
 
-    <%# 販売価格 %>
+    
     <div class="sell-price">
     </div> 
-    <%# /販売価格 %>
+   
 
     <%# 注意書き %>
     <div class="caution">
-      <%# <p class="sentence">
-        <a href="#">禁止されている出品、</a>
-        <a href="#">行為</a>
-        を必ずご確認ください。
-      </p>
-      <p class="sentence">
-        またブランド品でシリアルナンバー等がある場合はご記載ください。
-        <a href="#">偽ブランドの販売</a>
-        は犯罪であり処罰される可能性があります。
-      </p>
-      <p class="sentence">
-        また、出品をもちまして
-        <a href="#">加盟店規約</a>
-        に同意したことになります。
-      </p> %>
     </div> 
     <%# /注意書き %>
     <%# 下部ボタン %>

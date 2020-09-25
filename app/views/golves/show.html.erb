@@ -4,34 +4,37 @@
 <div class="item-show">
   <div class="item-box">
     <h2 class="name">
-      <%= "商品名" %>
+      <%= @golf.title %>
     </h2>
     <div class='item-img-content'>
-      <%= image_tag "item-sample.png" ,class:"item-box-img" %>
+      <%= image_tag @golf.image ,class:"item-box-img" %>
       <%# 商品が売れている場合は、sold outの表示をしましょう。 %>
       <div class='sold-out'>
         <span>Sold Out!!</span>
       </div>
       <%# //商品が売れている場合は、sold outの表示をしましょう。 %>
     </div>
-    <div class="item-price-box">
+    <%# <div class="item-price-box">
       <span class="item-price">
         ¥ 999,999,999
       </span>
       <span class="item-postage">
         (税込) 送料込み
       </span>
-    </div>
+    </div> %>
 
     <%# ログインしていて、なおかつ、ログインしているユーザと出品しているユーザが同一人物でないとき表示しましょう。 %>
 
-    <%= link_to '商品の編集', "#", method: :get, class: "item-red-btn" %>
+    <% if user_signed_in? && current_user.id == @golf.user_id%>
+    <%= link_to '商品の編集', edit_golf_path, method: :get, class: "item-red-btn" %>
     <p class='or-text'>or</p>
-    <%= link_to '削除', "#", method: :delete, class:'item-destroy' %>
-
+    <%= link_to '削除', golf_path , method: :delete, class:'item-destroy' %>
+    <% elsif @golf.recruit.present? %>
+    <% else %>
     <%# 商品が売れていない場合はこちらを表示しましょう %>
-    <%= link_to '購入画面に進む', "#" ,class:"item-red-btn"%>
+    <%= link_to '購入画面に進む', golf_recruits_path(@golf) ,class:"item-red-btn"%>
     <%# //商品が売れていない場合はこちらを表示しましょう %>
+    <% end %>
 
     <%# //ログインしていて、なおかつ、ログインしているユーザと出品しているユーザが同一人物でないとき表示しましょう。 %>
 
@@ -42,27 +45,35 @@
       <tbody>
         <tr>
           <th class="detail-item">出品者</th>
-          <td class="detail-value"><%= "出品者名" %></td>
+          <td class="detail-value"><%= @golf.user.nickname %></td>
         </tr>
         <tr>
-          <th class="detail-item">カテゴリー</th>
-          <td class="detail-value"><%= "カテゴリー名" %></td>
+          <th class="detail-item">日付</th>
+          <td class="detail-value"><%= @golf.play_date %></td>
         </tr>
         <tr>
-          <th class="detail-item">商品の状態</th>
-          <td class="detail-value"><%= "商品の状態" %></td>
+          <th class="detail-item">時間</th>
+          <td class="detail-value"><%= @golf.meeting_time.name %></td>
         </tr>
         <tr>
-          <th class="detail-item">配送料の負担</th>
-          <td class="detail-value"><%= "発送料の負担" %></td>
+          <th class="detail-item">スコア</th>
+          <td class="detail-value"><%= @golf.score %></td>
         </tr>
         <tr>
-          <th class="detail-item">発送元の地域</th>
-          <td class="detail-value"><%= "発送元の地域" %></td>
+          <th class="detail-item">ゴルフをする場所</th>
+          <td class="detail-value"><%= @golf.prefecture.name %></td>
         </tr>
         <tr>
-          <th class="detail-item">発送日の目安</th>
-          <td class="detail-value"><%= "発送日の目安" %></td>
+          <th class="detail-item">ゴルフ場の名前</th>
+          <td class="detail-value"><%= @golf.course_name %></td>
+        </tr>
+         <tr>
+          <th class="detail-item">送迎の有無</th>
+          <td class="detail-value"><%= @golf.drive.name %></td>
+        </tr>
+         <tr>
+          <th class="detail-item">かかる予算</th>
+          <td class="detail-value"><%= @golf.price %></td>
         </tr>
       </tbody>
     </table>
@@ -79,20 +90,44 @@
   </div>
   <%# /商品の概要 %>
 
+
   <div class="comment-box">
-    <form>
-      <textarea class="comment-text"></textarea>
-      <p class="comment-warn">
+     <p class="mt-5">コメント一覧</p>
+      <% if @comments %>
+        <% @comments.each do |comment| %>
+          <p>
+            <strong><%= link_to comment.user.nickname, "/users/#{comment.user_id}" %>：</strong>
+            <%= comment.text %>
+          </p>
+        <% end %>
+      <% end %>
+    </div>
+  
+  <% if user_signed_in? %>
+    <%= form_with(model: [@golf, @comment], local: true) do |f| %>
+      <%= f.text_area :text, class: "comment-text", rows: 5 %>
+      <button type="submit" class="comment-btn">
+        <%= image_tag "comment.png" ,class:"comment-flag-icon" ,width:"20",height:"25"%>
+        <span>コメントする<span>
+      </button> 
+      <% end %>
+    <% end %>
+ 
+
+
+
+    <%# <form>
+      <textarea class="comment-text"></textarea> 
         相手のことを考え丁寧なコメントを心がけましょう。
         <br>
         不快な言葉遣いなどは利用制限や退会処分となることがあります。
       </p>
       <button type="submit" class="comment-btn">
         <%= image_tag "comment.png" ,class:"comment-flag-icon" ,width:"20",height:"25"%>
-        <span>コメントする<span>
-      </button>
-    </form>
-  </div>
+        <%# <span>コメントする<span>
+      </button> 
+    </form>  %>
+  </div> 
   <div class="links">
     <a href="#" class="change-item-btn">
       ＜ 前の商品
