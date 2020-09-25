@@ -10,13 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_16_060943) do
+ActiveRecord::Schema.define(version: 2020_09_24_084029) do
+
+  create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.text "comment_content"
+    t.bigint "user_id", null: false
+    t.bigint "golf_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["golf_id"], name: "index_comments_on_golf_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
 
   create_table "golves", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title", null: false
     t.text "introduction", null: false
-    t.date "date_id", null: false
-    t.integer "time_id", null: false
+    t.date "play_date"
+    t.integer "meeting_time_id"
     t.integer "prefecture_id", null: false
     t.string "course_name"
     t.integer "drive_id", null: false
@@ -26,6 +57,15 @@ ActiveRecord::Schema.define(version: 2020_09_16_060943) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "score"
     t.index ["user_id"], name: "index_golves_on_user_id"
+  end
+
+  create_table "recruits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "golf_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["golf_id"], name: "index_recruits_on_golf_id"
+    t.index ["user_id"], name: "index_recruits_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -46,5 +86,10 @@ ActiveRecord::Schema.define(version: 2020_09_16_060943) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "comments", "golves"
+  add_foreign_key "comments", "users"
   add_foreign_key "golves", "users"
+  add_foreign_key "recruits", "golves"
+  add_foreign_key "recruits", "users"
 end
