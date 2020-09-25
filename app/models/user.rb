@@ -7,4 +7,5 @@ class User < ApplicationRecord
   has_many :golves
   has_many :recruits
   has_many :comments, dependent: :destroy
+  has_many :messages
 end
