@@ -17,11 +17,15 @@ class GolvesController < ApplicationController
     end
     @comment = Comment.new
     @commentALL = @golf.comments
+    @message = Message.new
+    @messageALL = @golf.messages
   end
 
   def show
     @comment = Comment.new
     @comments = @golf.comments.includes(:user)
+    @message = Message.new
+    @messages = @golf.messages.includes(:user)
   end
 
   def edit
