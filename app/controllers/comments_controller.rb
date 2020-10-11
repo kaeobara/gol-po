@@ -2,24 +2,11 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
 
   def create
+    # @comment.def create
     comment = Comment.create(comment_params)
     redirect_to golf_path(comment.golf.id)
+    enduser_id = current_user.id
   end
-    # @comment.user_id = current_user.id
-    # if @comment.save
-    #   flash[:success] = "コメントしました"
-    #   redirect_back(fallback_location: root_path)
-    # else
-    #   flash[:success] = "コメントできませんでした"
-    #   redirect_back(fallback_location: root_path)
-    # end
-  # end
-
-  # def update
-  #   @comment = Comment.find(params[:id])
-  #   @comment.update(delete_check:1)
-  #   redirect_to item_path(@comment.golf.id)
-  # end
 
   private
 

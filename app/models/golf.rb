@@ -6,7 +6,7 @@ class Golf < ApplicationRecord
   belongs_to_active_hash :meeting_time
   has_one_attached :image
   has_many :comments, dependent: :destroy
-  has_one :recruit, dependent: :destroy
+  has_many :messages, dependent: :destroy
 
   # with_options presence: true do
   #   validates :image

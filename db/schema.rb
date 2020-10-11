@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_25_084917) do
+ActiveRecord::Schema.define(version: 2020_09_28_091114) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -61,11 +61,11 @@ ActiveRecord::Schema.define(version: 2020_09_25_084917) do
 
   create_table "messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "content"
-    t.bigint "recruit_id"
+    t.bigint "golf_id"
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["recruit_id"], name: "index_messages_on_recruit_id"
+    t.index ["golf_id"], name: "index_messages_on_golf_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 2020_09_25_084917) do
   add_foreign_key "comments", "golves"
   add_foreign_key "comments", "users"
   add_foreign_key "golves", "users"
-  add_foreign_key "messages", "recruits"
+  add_foreign_key "messages", "golves"
   add_foreign_key "messages", "users"
   add_foreign_key "recruits", "golves"
   add_foreign_key "recruits", "users"
